@@ -143,7 +143,6 @@ export const QuestionPage = () => {
 
   const [val, setval] = useState("");
   const [result, setresult] = useState("");
-  const calculate = () => {};
 
   useEffect(() => {});
   const [showResult, setShowResult] = useState(false);

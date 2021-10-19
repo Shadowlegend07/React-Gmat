@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { styled, makeStyles } from "@material-ui/core/styles";
 import Stack from "@mui/material/Stack";
@@ -117,44 +117,24 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 0),
   },
 }));
-/* 
-const pointsDistance = (x1, x2, y1, y2) =>
-  Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)); */
-
-/* const getCoordinates = (a, b, c, x1, y1, x2, y2) => {
-  const l1 = pointsDistance(x1, x2, y1, y2);
-
-  const l2 = (Math.sin(b) * l1) / Math.sin(c);
-  const l3 = (Math.sin(a) * l1) / Math.sin(c);
-
-  console.log(a, b, c);
-  console.log(l1, l2, l3);
-
-  const x3 = x1 + l2 * Math.cos(a);
-  const y3 = y1 + l2 * Math.sin(a);
-
-  console.log(x3, y3);
-
-  return { x1, x2, y1, y2, x3, y3 };
-}; */
 
 export const Percentage = () => {
   const classes = useStyles();
   const [value1, setvalue1] = useState("");
   const [value2, setvalue2] = useState("");
   const [value3, setvalue3] = useState("");
-  const [result, setresult] = useState("");
+  //const [result, setresult] = useState("");
 
   const [showResult, setShowResult] = useState(false);
 
-  function setdata(x, y, z) {
+  /*   function setdata(x, y, z) {
     x = value1;
     y = value2;
     z = value3;
     const res = value2;
     setresult(res);
     setShowResult(false);
-  }
+  } */
 
   return (
     <div

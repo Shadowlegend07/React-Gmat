@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { styled, makeStyles } from "@material-ui/core/styles";
 import Stack from "@mui/material/Stack";
@@ -21,7 +21,7 @@ const AngleInput = styled("input")(({ theme }) => ({
   padding: "5px 10px",
   borderRadius: "6px",
   border: "1px solid gray",
-  width: "50px",
+  width: "20px",
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -138,21 +138,36 @@ const pointsDistance = (x1, x2, y1, y2) =>
   return { x1, x2, y1, y2, x3, y3 };
 }; */
 
-export const QuestionPage = () => {
+export const Algebra = () => {
   const classes = useStyles();
 
-  const [val, setval] = useState("");
-  const [result, setresult] = useState("");
-
-  useEffect(() => {});
+  const [value1, setvalue1] = useState(0);
+  const [value2, setvalue2] = useState(0);
+  const [result, setresult] = useState(0);
   const [showResult, setShowResult] = useState(false);
 
-  function setdata(event) {
-    const x = event.target.value;
-    setval(x);
-    const ans = `${x} √2`;
-    setresult(ans);
+  function getvalue1(e) {
+    var x = e.target.value;
+
+    setvalue1(x);
     setShowResult(false);
+  }
+  function getvalue2(e) {
+    setvalue2(e.target.value);
+    setShowResult(false);
+    console.log(e.target.value);
+  }
+
+  function calculate() {
+    let ans = 0;
+    for (var i = 1; i < value1; i += 2) {
+      ans += i;
+      console.log(i);
+    }
+    ans = ans + parseInt(value2);
+    console.log(value2);
+    console.log(ans);
+    setresult(ans);
   }
 
   return (
@@ -166,23 +181,28 @@ export const QuestionPage = () => {
         <Box display="flex" justifyContent="center" sx={{ marginTop: 45 }}>
           <Box sx={{ width: "50%" }}>
             <Stack direction="row" justifyContent="space-between">
-              <CustomButton>Subject - Geometry</CustomButton>
-              <CustomButton>Topic - Squares</CustomButton>
+              <CustomButton>Subject - Algebra</CustomButton>
+              <CustomButton>Topic - Integers</CustomButton>
             </Stack>
           </Box>
         </Box>
         <Box className={classes.questionContainer}>
           <Typography variant="h5" component="h1">
-            Question
+            Question 1
           </Typography>
           <Typography variant="body1" style={{ fontSize: "20px" }}>
-            What is the diagonal of a square with side {""}
-            <AngleInput onChange={setdata} />?
+            Function h(m) equals the sum of all non - negative odd integers from
+            0 to h. For instance: h(10)=1+3+5+7+9. What is the value of h(
+            <AngleInput value={value1} onChange={getvalue1} />){""} +{" "}
+            <AngleInput value={value2} onChange={getvalue2} />?
           </Typography>
           <Box className={classes.styleButton}>
             <StyledButton
               style={{ width: "15%" }}
-              onClick={() => setShowResult(true)}
+              onClick={() => {
+                calculate();
+                setShowResult(true);
+              }}
             >
               Calculate
             </StyledButton>
@@ -197,7 +217,7 @@ export const QuestionPage = () => {
             >
               <Box>
                 <Typography variant="h4">
-                  Answer: {result}
+                  Answer:{result}
                   {/* <AngleInput>
                   90 <sup>o</sup>
                 </AngleInput> */}
@@ -209,9 +229,9 @@ export const QuestionPage = () => {
                   variant="body2"
                   style={{ color: "#F23A5E", fontWeight: "bolder" }}
                 >
-                  The way of dealing with this problem is by knowing without the
-                  shade of a doubt that the diagonal of a square equals one of
-                  its sides times √2 or {val}√2
+                  This is Just a example for m=30. <br /> h(30) = 1 + 3 + 5 + 7
+                  + 9 + 11 + 13 + 15 + 17 + 19 + 21 + 23 + 25 + 27 + 29 = 225.
+                  h(30) + 10 = 225 + 10 = 235.
                 </Typography>
                 {/* <AngleInput>
                 90<sup>o</sup>
@@ -233,13 +253,16 @@ export const QuestionPage = () => {
             </Box>
           </Box>
         )}
-        <CustomButton to="/1">
-          <Box>
-            <StyledButton>
-              <Link to="/1">Next</Link>
-            </StyledButton>
-          </Box>
-        </CustomButton>
+        <Box>
+          <StyledButton>
+            <Link to="/2">Next</Link>
+          </StyledButton>
+        </Box>
+        <Box>
+          <StyledButton>
+            <Link to="/">Previous</Link>
+          </StyledButton>
+        </Box>
       </Container>
       <div style={{ marginTop: "auto" }}>
         <div className={classes.footer}>

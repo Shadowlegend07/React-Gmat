@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import { styled, makeStyles } from "@material-ui/core/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@material-ui/core/Button";
@@ -154,7 +154,7 @@ export const Percentage = () => {
         </Box>
         <Box className={classes.questionContainer}>
           <Typography variant="h5" component="h1">
-            Question 1
+            Question 2
           </Typography>
           <Typography variant="body1" style={{ fontSize: "20px" }}>
             <AngleInput
@@ -231,6 +231,16 @@ export const Percentage = () => {
             </Box>
           </Box>
         )}
+        <Box>
+          <StyledButton>
+            <Link to="/1">Next</Link>
+          </StyledButton>
+        </Box>
+        <Box>
+          <StyledButton>
+            <Link to="/1">Previous</Link>
+          </StyledButton>
+        </Box>
       </Container>
       <div style={{ marginTop: "auto" }}>
         <div className={classes.footer}>

@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+//quesiton no 39177 on 4th page
 import { Link } from "react-router-dom";
+import { create, all } from "mathjs";
 import { styled, makeStyles } from "@material-ui/core/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+const config = {};
+const math = create(all, config);
 
 const CustomButton = styled("span")(({ theme }) => ({
   background: "#FCC9C9",
@@ -21,7 +25,7 @@ const AngleInput = styled("input")(({ theme }) => ({
   padding: "5px 10px",
   borderRadius: "6px",
   border: "1px solid gray",
-  width: "50px",
+  width: "20px",
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -138,22 +142,63 @@ const pointsDistance = (x1, x2, y1, y2) =>
   return { x1, x2, y1, y2, x3, y3 };
 }; */
 
-export const QuestionPage = () => {
+export const Ratio1 = () => {
   const classes = useStyles();
 
-  const [val, setval] = useState("");
-  const [result, setresult] = useState("");
-
-  useEffect(() => {});
+  const [value1, setvalue1] = useState(0);
+  const [value2, setvalue2] = useState(0);
+  const [value3, setvalue3] = useState(0);
+  const [value4, setvalue4] = useState(0);
+  const [num, setnum] = useState(0);
+  const [num1, setnum1] = useState(0);
+  const [den1, setden1] = useState(0);
+  const [den, setden] = useState(0);
+  const [result, setresult] = useState(0);
   const [showResult, setShowResult] = useState(false);
 
-  function setdata(event) {
-    const x = event.target.value;
-    setval(x);
-    const ans = `${x} √2`;
-    setresult(ans);
+  function getvalue1(e) {
+    var x = e.target.value;
+
+    setvalue1(x);
     setShowResult(false);
   }
+  function getvalue2(e) {
+    setvalue2(e.target.value);
+    setShowResult(false);
+    // console.log(e.target.value);
+  }
+  function getvalue3(e) {
+    setvalue3(e.target.value);
+    setShowResult(false);
+    // console.log(e.target.value);
+  }
+  function getvalue4(e) {
+    setvalue4(e.target.value);
+    setShowResult(false);
+    // console.log(e.target.value);
+  }
+
+  /*  function reduce(numer, denomin) {
+    var gcd = function gcd(a, b) {
+      return b ? gcd(b, a % b) : a;
+    };
+    gcd = gcd(numer, denomin);
+    return [numer / gcd, denomin / gcd];
+  }
+ */
+  function calculate() {
+    var a1 = value2 / value3;
+    var a2 = a1 * value4;
+    var frac = math.fraction(a2);
+    setnum(frac.n);
+    setden(frac.d);
+    var per = value1 / 100;
+    var frac1 = math.fraction(per);
+    setnum1(frac1.n);
+    setden1(frac.d);
+    var ans = per * a2;
+    setresult(ans);
+  } //end of function
 
   return (
     <div
@@ -166,23 +211,28 @@ export const QuestionPage = () => {
         <Box display="flex" justifyContent="center" sx={{ marginTop: 45 }}>
           <Box sx={{ width: "50%" }}>
             <Stack direction="row" justifyContent="space-between">
-              <CustomButton>Subject - Geometry</CustomButton>
-              <CustomButton>Topic - Squares</CustomButton>
+              <CustomButton>Subject - General</CustomButton>
+              <CustomButton>Topic - Fractions and Decimals</CustomButton>
             </Stack>
           </Box>
         </Box>
         <Box className={classes.questionContainer}>
           <Typography variant="h5" component="h1">
-            Question
+            Question 4
           </Typography>
           <Typography variant="body1" style={{ fontSize: "20px" }}>
-            What is the diagonal of a square with side {""}
-            <AngleInput onChange={setdata} />?
+            What is <AngleInput value={value1} onChange={getvalue1} /> % of{" "}
+            <AngleInput value={value2} onChange={getvalue2} /> /{" "}
+            <AngleInput value={value3} onChange={getvalue3} /> of {""}
+            <AngleInput value={value4} onChange={getvalue4} /> ?
           </Typography>
           <Box className={classes.styleButton}>
             <StyledButton
               style={{ width: "15%" }}
-              onClick={() => setShowResult(true)}
+              onClick={() => {
+                calculate();
+                setShowResult(true);
+              }}
             >
               Calculate
             </StyledButton>
@@ -197,7 +247,7 @@ export const QuestionPage = () => {
             >
               <Box>
                 <Typography variant="h4">
-                  Answer: {result}
+                  Answer:{result}
                   {/* <AngleInput>
                   90 <sup>o</sup>
                 </AngleInput> */}
@@ -209,9 +259,10 @@ export const QuestionPage = () => {
                   variant="body2"
                   style={{ color: "#F23A5E", fontWeight: "bolder" }}
                 >
-                  The way of dealing with this problem is by knowing without the
-                  shade of a doubt that the diagonal of a square equals one of
-                  its sides times √2 or {val}√2
+                  First of all Multiply {value4} with {value2}/{value3} and then
+                  take the {value1}% of the result of ({value1}% of {value2}/
+                  {value3}) = {num}/{den} and then take the {num1}/{den1} ×{" "}
+                  {num}/{den} = {result}
                 </Typography>
                 {/* <AngleInput>
                 90<sup>o</sup>
@@ -233,13 +284,11 @@ export const QuestionPage = () => {
             </Box>
           </Box>
         )}
-        <CustomButton to="/1">
-          <Box>
-            <StyledButton>
-              <Link to="/1">Next</Link>
-            </StyledButton>
-          </Box>
-        </CustomButton>
+        <Box>
+          <StyledButton>
+            <Link to="/3">Previous</Link>
+          </StyledButton>
+        </Box>
       </Container>
       <div style={{ marginTop: "auto" }}>
         <div className={classes.footer}>

@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+// Question no 39232
 import { Link } from "react-router-dom";
+import { create, all } from "mathjs";
 import { styled, makeStyles } from "@material-ui/core/styles";
 import Stack from "@mui/material/Stack";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-
+const config = {};
+const math = create(all, config);
 const CustomButton = styled("span")(({ theme }) => ({
   background: "#FCC9C9",
   borderRadius: "8px",
@@ -21,7 +24,7 @@ const AngleInput = styled("input")(({ theme }) => ({
   padding: "5px 10px",
   borderRadius: "6px",
   border: "1px solid gray",
-  width: "50px",
+  width: "20px",
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -138,21 +141,43 @@ const pointsDistance = (x1, x2, y1, y2) =>
   return { x1, x2, y1, y2, x3, y3 };
 }; */
 
-export const QuestionPage = () => {
+export const Ratio = () => {
   const classes = useStyles();
 
-  const [val, setval] = useState("");
-  const [result, setresult] = useState("");
-
-  useEffect(() => {});
+  const [value1, setvalue1] = useState(0);
+  const [prenum, setprenum] = useState(0);
+  const [preden, setpreden] = useState(0);
+  const [num, setnum] = useState(0);
+  const [den, setden] = useState(0);
   const [showResult, setShowResult] = useState(false);
 
-  function setdata(event) {
-    const x = event.target.value;
-    setval(x);
-    const ans = `${x} √2`;
-    setresult(ans);
+  function getvalue1(e) {
+    var x = e.target.value;
+
+    setvalue1(x);
     setShowResult(false);
+  }
+
+  function calculate() {
+    let ans = 0;
+    var p = parseFloat(value1);
+    var m = 10;
+    if (p === 2) {
+      m = 100;
+    }
+    if (p === 3) {
+      m = 1000;
+    }
+
+    var pk = (p * m) / m;
+    setprenum(p * m);
+    setpreden(m);
+    ans = 1 / pk;
+    var frac = math.fraction(ans);
+    console.log(frac.n, frac.d);
+    setnum(frac.n);
+    setden(frac.d);
+    console.log(ans);
   }
 
   return (
@@ -166,23 +191,26 @@ export const QuestionPage = () => {
         <Box display="flex" justifyContent="center" sx={{ marginTop: 45 }}>
           <Box sx={{ width: "50%" }}>
             <Stack direction="row" justifyContent="space-between">
-              <CustomButton>Subject - Geometry</CustomButton>
-              <CustomButton>Topic - Squares</CustomButton>
+              <CustomButton>Subject - Algebra</CustomButton>
+              <CustomButton>Topic - Integers</CustomButton>
             </Stack>
           </Box>
         </Box>
         <Box className={classes.questionContainer}>
           <Typography variant="h5" component="h1">
-            Question
+            Question 2
           </Typography>
           <Typography variant="body1" style={{ fontSize: "20px" }}>
-            What is the diagonal of a square with side {""}
-            <AngleInput onChange={setdata} />?
+            If x/y=
+            <AngleInput value={value1} onChange={getvalue1} />, then y/x = ?
           </Typography>
           <Box className={classes.styleButton}>
             <StyledButton
               style={{ width: "15%" }}
-              onClick={() => setShowResult(true)}
+              onClick={() => {
+                calculate();
+                setShowResult(true);
+              }}
             >
               Calculate
             </StyledButton>
@@ -197,7 +225,7 @@ export const QuestionPage = () => {
             >
               <Box>
                 <Typography variant="h4">
-                  Answer: {result}
+                  Answer:{num}/{den}
                   {/* <AngleInput>
                   90 <sup>o</sup>
                 </AngleInput> */}
@@ -205,14 +233,12 @@ export const QuestionPage = () => {
               </Box>
               <Box className={classes.explination}>
                 <Typography variant="body2">Explanation</Typography>
+                We are told that x/y={value1}, or {prenum}/{preden}. Therefore,
+                {preden}/{prenum} will be{num}/{den}
                 <Typography
                   variant="body2"
                   style={{ color: "#F23A5E", fontWeight: "bolder" }}
-                >
-                  The way of dealing with this problem is by knowing without the
-                  shade of a doubt that the diagonal of a square equals one of
-                  its sides times √2 or {val}√2
-                </Typography>
+                ></Typography>
                 {/* <AngleInput>
                 90<sup>o</sup>
               </AngleInput> */}
@@ -233,13 +259,16 @@ export const QuestionPage = () => {
             </Box>
           </Box>
         )}
-        <CustomButton to="/1">
-          <Box>
-            <StyledButton>
-              <Link to="/1">Next</Link>
-            </StyledButton>
-          </Box>
-        </CustomButton>
+        <Box>
+          <StyledButton>
+            <Link to="/3">Next</Link>
+          </StyledButton>
+        </Box>
+        <Box>
+          <StyledButton>
+            <Link to="/1">Previous</Link>
+          </StyledButton>
+        </Box>
       </Container>
       <div style={{ marginTop: "auto" }}>
         <div className={classes.footer}>
